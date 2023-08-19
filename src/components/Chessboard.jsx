@@ -6,24 +6,29 @@ import initialPieces  from '../data/chessPieces'
 export default function Chessboard() {
 
   const [activePiece, setActivePiece] = useState(null)
+
   const [teamTurn, setTeamTurn ] = useState('w')
   
-  const [board, setBoard] = useState(Array.from(Array(8), () => new Array(8).fill(null)))
   const [pieces, setPieces] = useState(initialPieces)
+  const [board, setBoard] = useState(() => initializeBoard())
   
   useEffect(() => {
-    const newBoard = board.slice()
-    pieces.forEach(piece => {
-      newBoard[piece.y][piece.x] = piece
-    })
-    setBoard(newBoard)
-    console.log(board.length * board[0].length)
+    setBoard(initializeBoard())
   }, [pieces])
 
+  function initializeBoard() {
+    let initialBoard = Array.from(Array(8), () => new Array(8).fill(null))
+    pieces.forEach(piece => {
+      initialBoard[piece.y][piece.x] = piece
+    })
+
+    return initialBoard
+  }
+
   function handleClick(piece, isAvailableMove, x, y) {
-    // if you don't click on a piece or a sqaure that the active piece can move to
+    // if you don't click on a piece or a square that the active piece can move to
     // setActive piece to null
-    if (!piece && !isAvailableMove) { 
+    if (!piece && !isAvailableMove) {
       console.log('reset')
       setActivePiece(null)
     } 
@@ -32,6 +37,7 @@ export default function Chessboard() {
     else if (piece?.team == teamTurn) {
       setActivePiece(pieces[pieces.indexOf(piece)])
     }
+
     else if (isAvailableMove) {
       console.log('move piece')
       let index = pieces.indexOf(activePiece)
