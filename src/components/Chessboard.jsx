@@ -27,7 +27,6 @@ export default function Chessboard() {
       }
       
       let isAvailableMove = activePiece?.availableMove(xIndex, yIndex)
-      let isDarkColor = calculateColor(xIndex, yIndex)
 
       function handleClick(piece) {
         
@@ -49,7 +48,13 @@ export default function Chessboard() {
       }
 
       return (
-        <ChessSquare key={x+y} isDarkColor={isDarkColor} piece={piece} isActivePiece={isActivePiece} handleClick={handleClick} isAvailableMove={isAvailableMove} />
+        <ChessSquare 
+          key={x+y} 
+          isDarkColor={calculateColor(xIndex, yIndex)} 
+          piece={piece} isActivePiece={isActivePiece} 
+          handleClick={handleClick} 
+          isAvailableMove={isAvailableMove} 
+        />
       )
     })
   )
