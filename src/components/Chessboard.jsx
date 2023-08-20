@@ -6,6 +6,7 @@ import initialPieces  from '../data/chessPieces'
 export default function Chessboard() {
 
   const [pieces, setPieces] = useState(initialPieces)
+  const [capturedPieces, setCapturedPieces] = useState([])
   const [board, setBoard] = useState(() => initializeBoard())
   const [activePiece, setActivePiece] = useState(null)
   const [availableMoves, setAvailableMoves] = useState([])
@@ -46,10 +47,17 @@ export default function Chessboard() {
     }
 
     else if (isAvailableMove) {
-      console.log('move piece')
+      let capturedPiece = board[y][x]
+
       const newPieces = pieces.map((piece) => 
         piece === activePiece ? { ...piece, y, x} : piece
       )
+      // capture piece
+      if (capturedPiece) {
+        console.log(`${activePiece.name} takes`, capturedPiece.name)
+        newPieces.splice(newPieces.indexOf(capturedPiece), 1)
+        setCapturedPieces([...capturedPieces, capturedPiece])
+      }
       setPieces(newPieces)
       setActivePiece(null)
       setTeamTurn(teamTurn == 'b'? 'w' : 'b')
