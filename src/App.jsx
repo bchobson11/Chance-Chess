@@ -1,11 +1,11 @@
 import { useState } from 'react'
-import Chessboard from './components/Chessboard'
+import Game from './components/Game'
 
 
 function App() {
   return (
     <div className='h-screen flex items-center justify-center'>
-      <Chessboard />
+      <Game />
     </div>
   )
 }
